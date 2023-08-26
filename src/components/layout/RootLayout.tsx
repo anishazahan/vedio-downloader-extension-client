@@ -7,7 +7,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <NextTopLoader color="#5036E1" height={4} />
+      {/* <NextTopLoader color="#5036E1" height={4} /> */}
       <div className="">{children}</div>
     </>
   );

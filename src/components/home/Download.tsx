@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
+import NextTopLoader from "nextjs-toploader";
+import Image from "next/image";
 
 const Download = () => {
   const [link, setLink] = useState("");
   const [videoInfo, setVideoInfo] = useState("");
-  const [resu, setResu] = useState("");
+  const [resulation, setResulation] = useState("");
   const [loader, setLoader] = useState(false);
 
   const get_video_details = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,9 +20,9 @@ const Download = () => {
         `http://localhost:5000/api/get-video-info/${videoId}`
       );
       console.log(data);
-      //   setLoader(false);
-      //   setVideoInfo(data.videoInfo);
-      //   setResu(data.videoInfo.lastResu);
+      setLoader(false);
+      setVideoInfo(data.videoInfo);
+      setResulation(data.videoInfo.lastResu);
     } catch (error: any) {
       console.log(error.response);
     }
@@ -28,6 +30,8 @@ const Download = () => {
 
   return (
     <div className="bg-gray-800 w-full h-[100vh] flex justify-center items-center">
+      {/* .........  form ....... */}
+
       <div className="w-[600px] h-[500px] card-box bg-black/70 border border-opacity-40">
         <h2 className="text-xl text-white font-bold text-center py-8">
           Youtube Video Downloader
@@ -48,6 +52,18 @@ const Download = () => {
             />
           </div>
         </form>
+      </div>
+
+      {/* .........  download ....... */}
+
+      <div>
+        {loader ? (
+          <div className="w-full py-5 text-center">
+            <NextTopLoader color="#fff" />
+          </div>
+        ) : (
+          "hellow"
+        )}
       </div>
     </div>
   );
