@@ -22,6 +22,14 @@ const Download = () => {
 
     const videoId = link.split("https://youtu.be/")[1];
     console.log(videoId);
+
+    // const videoIdMatch = link.match(/[?&]v=([0-9A-Za-z_-]{11})($|&)/);
+    // const videoId = videoIdMatch ? videoIdMatch[1] : null;
+
+    if (!videoId) {
+      console.log("Invalid YouTube video ID");
+      return;
+    }
     try {
       setLoader(true);
       const { data } = await axios.get(
