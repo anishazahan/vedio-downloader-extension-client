@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 const Download = () => {
@@ -8,18 +9,21 @@ const Download = () => {
 
   const get_video_details = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(link);
 
-    // const videoId = link.split('https://youtu.be/')[1]
-    // try {
-    //     setLoader(true)
-    //     const { data } = await axios.get(`http://localhost:5000/api/get-video-info/${videoId}`)
-    //     setLoader(false)
-    //     setVideoInfo(data.videoInfo)
-    //     setResu(data.videoInfo.lastResu)
-    // } catch (error) {
-    //     console.log(error.response)
-    // }
+    const videoId = link.split("https://youtu.be/")[1];
+    console.log(videoId);
+    try {
+      setLoader(true);
+      const { data } = await axios.get(
+        `http://localhost:5000/api/get-video-info/${videoId}`
+      );
+      console.log(data);
+      //   setLoader(false);
+      //   setVideoInfo(data.videoInfo);
+      //   setResu(data.videoInfo.lastResu);
+    } catch (error: any) {
+      console.log(error.response);
+    }
   };
 
   return (
