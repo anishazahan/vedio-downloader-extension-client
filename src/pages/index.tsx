@@ -44,8 +44,14 @@ const Download = () => {
     }
   };
 
+  // const video_download = () => {
+  //   const videoId = link.split("https://youtu.be/")[1];
+  //   const url = `http://localhost:5000/video-download?id=${videoId}&resu=${resulation}`;
+  //   window.location.href = url;
+  // };
+
   const video_download = () => {
-    const videoId = link.split("https://youtu.be/")[1];
+    const videoId = link.split("https://youtu.be/")[1].split("?")[0]; // Remove any query parameters
     const url = `http://localhost:5000/video-download?id=${videoId}&resu=${resulation}`;
     window.location.href = url;
   };
