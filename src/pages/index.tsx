@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import moment from "moment";
 import axios from "axios";
 import NextTopLoader from "nextjs-toploader";
 import Loader from "@/components/home/Loader";
@@ -17,6 +18,7 @@ const Download = () => {
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null);
   const [resulation, setResulation] = useState("");
   const [loader, setLoader] = useState(false);
+  console.log(videoInfo);
 
   const get_video_details = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +36,7 @@ const Download = () => {
     try {
       setLoader(true);
       const { data } = await axios.get(
-        `https://vedio-downloader-extension-server.vercel.app/api/get-video-info/${videoId}`
+        `https://vedio-downloader-server.onrender.com/api/get-video-info/${videoId}`
       );
       console.log(data);
       setLoader(false);
@@ -45,18 +47,24 @@ const Download = () => {
     }
   };
 
-  // const video_download = () => {
-  //   const videoId = link.split("https://youtu.be/")[1];
-  //   const url = `http://localhost:5000/video-download?id=${videoId}&resu=${resulation}`;
-  //   window.location.href = url;
-  // };
-
   const video_download = () => {
     const videoId = link.split("https://youtu.be/")[1].split("?")[0]; // Remove any query parameters
-    const url = `http://localhost:5000/video-download?id=${videoId}&resu=${resulation}`;
+    const url = `https://vedio-downloader-server.onrender.com/video-download?id=${videoId}&resu=${resulation}`;
     window.location.href = url;
   };
 
+  const [currentTime, setCurrentTime] = useState(moment());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(moment());
+    }, 1000); // Update every second
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const localTime = currentTime.format("LT"); // Display hours and minutes
+  const localHour = currentTime.format("H"); // Display current hour in 24-hour format
   return (
     <>
       <Head>
@@ -105,7 +113,7 @@ const Download = () => {
                     <h3 className="font-semibold text-xl">
                       {videoInfo?.title.slice(0, 70)}...
                     </h3>
-                    <span>Time : 33.43</span>
+                    <span>{localTime}</span>
                     <div className="flex gap-3 mt-4">
                       <select
                         onChange={(e) => setResulation(e.target.value)}
